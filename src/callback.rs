@@ -1,7 +1,7 @@
 //! DingTalk Webhook/Callback handling support.
 
 use crate::error::{Error, Result};
-use base64::{engine::general_purpose::STANDARD as BASE64, Engine};
+use base64::{Engine, engine::general_purpose::STANDARD as BASE64};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
@@ -200,7 +200,7 @@ fn compute_sha1(input: &str) -> String {
 }
 
 fn aes_encrypt(key: &[u8], iv: &[u8], data: &[u8]) -> Result<Vec<u8>> {
-    use aes::cipher::{block_padding::Pkcs7, BlockEncryptMut, KeyIvInit};
+    use aes::cipher::{BlockEncryptMut, KeyIvInit, block_padding::Pkcs7};
     type Aes256CbcEnc = cbc::Encryptor<aes::Aes256>;
 
     let cipher = Aes256CbcEnc::new(key.into(), iv.into());
@@ -215,7 +215,7 @@ fn aes_encrypt(key: &[u8], iv: &[u8], data: &[u8]) -> Result<Vec<u8>> {
 }
 
 fn aes_decrypt(key: &[u8], iv: &[u8], data: &[u8]) -> Result<Vec<u8>> {
-    use aes::cipher::{block_padding::Pkcs7, BlockDecryptMut, KeyIvInit};
+    use aes::cipher::{BlockDecryptMut, KeyIvInit, block_padding::Pkcs7};
     type Aes256CbcDec = cbc::Decryptor<aes::Aes256>;
 
     let cipher = Aes256CbcDec::new(key.into(), iv.into());
@@ -228,21 +228,21 @@ fn aes_decrypt(key: &[u8], iv: &[u8], data: &[u8]) -> Result<Vec<u8>> {
 }
 
 fn generate_random_string(len: usize) -> String {
-    use rand::Rng;
+    use rand::RngExt;
     const CHARSET: &[u8] = b"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    let mut rng = rand::thread_rng();
+    let mut rng = rand::rng();
     (0..len)
         .map(|_| {
-            let idx = rng.gen_range(0..CHARSET.len());
+            let idx = rng.random_range(0..CHARSET.len());
             CHARSET[idx] as char
         })
         .collect()
 }
 
 fn generate_random_bytes(len: usize) -> Vec<u8> {
-    use rand::Rng;
-    let mut rng = rand::thread_rng();
-    (0..len).map(|_| rng.gen::<u8>()).collect()
+    use rand::RngExt;
+    let mut rng = rand::rng();
+    (0..len).map(|_| rng.random::<u8>()).collect()
 }
 
 pub struct CallbackHandler {

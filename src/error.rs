@@ -46,6 +46,9 @@ pub enum Error {
     #[error("Base64 decode error: {0}")]
     Base64Error(#[from] base64::DecodeError),
 
+    #[error("WebSocket error: {0}")]
+    WebSocketError(#[from] tokio_tungstenite::tungstenite::Error),
+
     #[error("Rate limit exceeded: {message}")]
     RateLimited {
         message: String,

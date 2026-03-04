@@ -42,6 +42,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 - `examples/basic_client.rs`
 - `examples/send_im_message.rs`
+- `examples/stream_client.rs`
 
 Run:
 
@@ -49,6 +50,26 @@ Run:
 cargo run --example basic_client
 cargo run --example send_im_message
 ```
+
+Stream mode example:
+
+```bash
+set DINGTALK_CLIENT_ID=your_client_id
+set DINGTALK_CLIENT_SECRET=your_client_secret
+cargo run --example stream_client
+```
+
+## Stream Mode
+
+This SDK supports DingTalk Stream mode:
+
+- Open stream connection endpoint: `/v1.0/gateway/connections/open`
+- WebSocket callback handling for `CALLBACK`, `EVENT`, and `SYSTEM` frames
+- Built-in handling for system `ping` and `disconnect`
+- Common callback topics:
+  - `/v1.0/im/bot/messages/get`
+  - `/v1.0/card/instances/callback`
+  - `/v1.0/graph/api/invoke`
 
 ## Development
 
