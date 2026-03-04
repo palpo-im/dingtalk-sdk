@@ -2,6 +2,8 @@
 
 A Rust SDK for DingTalk Open Platform APIs.
 
+> Warning: This is not an official DingTalk or Alibaba crate. It is a community-maintained project.
+
 ## Status
 
 This crate currently provides:
