@@ -1,0 +1,26 @@
+//! DingTalk API bindings for the live_activities module.
+
+use crate::client::DingTalkClient;
+use crate::error::Result;
+use serde::{Deserialize, Serialize};
+
+pub use crate::models::*;
+
+impl DingTalkClient {
+    /// Executes this API call.
+    pub async fn live_activities_list(
+        &self,
+        access_token: &str,
+    ) -> Result<Live_activitiesListResponse> {
+        let body = serde_json::json!({});
+        self.post("/topapi/live_activities/list", access_token, &body)
+            .await
+    }
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+/// Payload model used by this API.
+pub struct Live_activitiesListResponse {
+    pub list: Vec<serde_json::Value>,
+    pub has_more: bool,
+}
