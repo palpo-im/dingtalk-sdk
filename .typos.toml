@@ -1,0 +1,2 @@
+[files]
+extend-exclude = ["src/openapi_generated.rs"]
