@@ -4,6 +4,7 @@ pub mod callback;
 pub mod client;
 pub mod error;
 pub mod models;
+pub mod openapi_generated;
 pub mod stream;
 
 pub mod activity;
