@@ -11,7 +11,7 @@ impl DingTalkClient {
     pub async fn ai_interaction_list(
         &self,
         access_token: &str,
-    ) -> Result<Ai_interactionListResponse> {
+    ) -> Result<AiInteractionListResponse> {
         let body = serde_json::json!({});
         self.post("/topapi/ai_interaction/list", access_token, &body)
             .await
@@ -20,7 +20,7 @@ impl DingTalkClient {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 /// Payload model used by this API.
-pub struct Ai_interactionListResponse {
+pub struct AiInteractionListResponse {
     pub list: Vec<serde_json::Value>,
     pub has_more: bool,
 }

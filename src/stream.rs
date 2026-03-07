@@ -81,6 +81,7 @@ pub struct DataFrame {
     pub spec_version: String,
     #[serde(rename = "type")]
     pub frame_type: String,
+    #[serde(default, alias = "timestamp")]
     pub time: i64,
     pub headers: HashMap<String, String>,
     pub data: String,
@@ -616,5 +617,38 @@ mod tests {
             url.as_str(),
             "wss://open-connection.dingtalk.com/connect?ticket=ticket_123"
         );
+    }
+
+    #[test]
+    fn parse_data_frame_without_time() {
+        let frame = serde_json::json!({
+            "specVersion": "1.0",
+            "type": "CALLBACK",
+            "headers": {
+                "topic": TOPIC_BOT_MESSAGE_CALLBACK,
+                "messageId": "msg_1"
+            },
+            "data": "{}"
+        });
+
+        let parsed: DataFrame = serde_json::from_value(frame).expect("frame should parse");
+        assert_eq!(parsed.time, 0);
+    }
+
+    #[test]
+    fn parse_data_frame_with_timestamp_alias() {
+        let frame = serde_json::json!({
+            "specVersion": "1.0",
+            "type": "CALLBACK",
+            "timestamp": 1700000000001_i64,
+            "headers": {
+                "topic": TOPIC_BOT_MESSAGE_CALLBACK,
+                "messageId": "msg_2"
+            },
+            "data": "{}"
+        });
+
+        let parsed: DataFrame = serde_json::from_value(frame).expect("frame should parse");
+        assert_eq!(parsed.time, 1700000000001_i64);
     }
 }

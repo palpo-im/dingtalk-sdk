@@ -1,3 +1,4 @@
+use dingtalk_sdk::DingTalkClient;
 use dingtalk_sdk::calendar::{
     AddCalendarAttendeesRequest, AddCalendarMeetingRoomsRequest, CalendarAttendeeRef,
     CalendarMeetingRoomRef, CancelCalendarEventRequest, DeleteCalendarEventRequest,
@@ -11,7 +12,6 @@ use dingtalk_sdk::doc::{DocAddCommentRequest, DocListCommentsRequest, DocWorkspa
 use dingtalk_sdk::exclusive::{
     DeleteExclusiveTrustedDeviceRequest, SetExclusiveConversationCategoryRequest,
 };
-use dingtalk_sdk::DingTalkClient;
 use wiremock::matchers::{body_json, header, method, path, query_param};
 use wiremock::{Mock, MockServer, ResponseTemplate};
 
@@ -1297,7 +1297,9 @@ async fn yida_openapi_methods_match_reference_paths() {
     Mock::given(method("PUT"))
         .and(path("/v1.0/yida/forms/instances/components"))
         .and(header("x-acs-dingtalk-access-token", "token-123"))
-        .and(body_json(serde_json::json!({ "instanceId": "inst-1", "componentValue": "v1" })))
+        .and(body_json(
+            serde_json::json!({ "instanceId": "inst-1", "componentValue": "v1" }),
+        ))
         .respond_with(ResponseTemplate::new(200).set_body_json(serde_json::json!({
             "success": true
         })))
@@ -1354,7 +1356,9 @@ async fn bizfinance_openapi_methods_match_reference_paths() {
     Mock::given(method("PUT"))
         .and(path("/v1.0/bizfinance/roles/permissions"))
         .and(header("x-acs-dingtalk-access-token", "token-123"))
-        .and(body_json(serde_json::json!({ "roleCode": "financeManager" })))
+        .and(body_json(
+            serde_json::json!({ "roleCode": "financeManager" }),
+        ))
         .respond_with(ResponseTemplate::new(200).set_body_json(serde_json::json!({
             "result": true
         })))
@@ -1364,7 +1368,9 @@ async fn bizfinance_openapi_methods_match_reference_paths() {
     Mock::given(method("POST"))
         .and(path("/v1.0/bizfinance/invoices/batch"))
         .and(header("x-acs-dingtalk-access-token", "token-123"))
-        .and(body_json(serde_json::json!({ "invoices": [{ "invoiceNo": "INV-1" }] })))
+        .and(body_json(
+            serde_json::json!({ "invoices": [{ "invoiceNo": "INV-1" }] }),
+        ))
         .respond_with(ResponseTemplate::new(200).set_body_json(serde_json::json!({
             "successCount": 1
         })))
@@ -1415,13 +1421,19 @@ async fn bizfinance_openapi_methods_match_reference_paths() {
     assert_eq!(invoices["successCount"], 1);
 
     let consume = client
-        .bizfinance_begin_consume("token-123", &serde_json::json!({ "benefitId": "benefit-1" }))
+        .bizfinance_begin_consume(
+            "token-123",
+            &serde_json::json!({ "benefitId": "benefit-1" }),
+        )
         .await
         .expect("begin consume should succeed");
     assert_eq!(consume["consumeId"], "consume-1");
 
     let deleted = client
-        .bizfinance_delete_receipt("token-123", &serde_json::json!({ "receiptId": "receipt-1" }))
+        .bizfinance_delete_receipt(
+            "token-123",
+            &serde_json::json!({ "receiptId": "receipt-1" }),
+        )
         .await
         .expect("delete receipt should succeed");
     assert_eq!(deleted["result"], true);
@@ -1444,7 +1456,9 @@ async fn edu_openapi_methods_match_reference_paths() {
     Mock::given(method("POST"))
         .and(path("/v1.0/edu/cards"))
         .and(header("x-acs-dingtalk-access-token", "token-123"))
-        .and(body_json(serde_json::json!({ "cards": [{ "name": "c1" }] })))
+        .and(body_json(
+            serde_json::json!({ "cards": [{ "name": "c1" }] }),
+        ))
         .respond_with(ResponseTemplate::new(200).set_body_json(serde_json::json!({
             "taskId": "task-1"
         })))
@@ -1454,7 +1468,9 @@ async fn edu_openapi_methods_match_reference_paths() {
     Mock::given(method("POST"))
         .and(path("/v1.0/edu/orders"))
         .and(header("x-acs-dingtalk-access-token", "token-123"))
-        .and(body_json(serde_json::json!({ "userId": "u1", "skuId": "sku-1" })))
+        .and(body_json(
+            serde_json::json!({ "userId": "u1", "skuId": "sku-1" }),
+        ))
         .respond_with(ResponseTemplate::new(200).set_body_json(serde_json::json!({
             "orderId": "order-1"
         })))
@@ -1483,7 +1499,10 @@ async fn edu_openapi_methods_match_reference_paths() {
     assert_eq!(activated["result"], true);
 
     let cards = client
-        .edu_batch_create_cards("token-123", &serde_json::json!({ "cards": [{ "name": "c1" }] }))
+        .edu_batch_create_cards(
+            "token-123",
+            &serde_json::json!({ "cards": [{ "name": "c1" }] }),
+        )
         .await
         .expect("batch create cards should succeed");
     assert_eq!(cards["taskId"], "task-1");

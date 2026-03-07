@@ -28643,7 +28643,7 @@ impl DingTalkClient {
     /// Auto-generated from Go reference SDK.
     /// Module: edu_1_0
     /// Action: QueryClassScheduleByTimeSchool
-    /// Endpoint: GET /v1.0/edu/schools/classes/courses 
+    /// Endpoint: GET /v1.0/edu/schools/classes/courses
     pub async fn go_edu_1_0_query_class_schedule_by_time_school(
         &self,
         access_token: &str,
@@ -68820,5 +68820,4 @@ impl DingTalkClient {
         )
         .await
     }
-
 }

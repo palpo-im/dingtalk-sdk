@@ -8,7 +8,7 @@ pub use crate::models::*;
 
 impl DingTalkClient {
     /// Executes this API call.
-    pub async fn ding_phone_list(&self, access_token: &str) -> Result<Ding_phoneListResponse> {
+    pub async fn ding_phone_list(&self, access_token: &str) -> Result<DingPhoneListResponse> {
         let body = serde_json::json!({});
         self.post("/topapi/ding_phone/list", access_token, &body)
             .await
@@ -17,7 +17,7 @@ impl DingTalkClient {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 /// Payload model used by this API.
-pub struct Ding_phoneListResponse {
+pub struct DingPhoneListResponse {
     pub list: Vec<serde_json::Value>,
     pub has_more: bool,
 }

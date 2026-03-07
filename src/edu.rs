@@ -37,9 +37,15 @@ impl DingTalkClient {
         access_token: &str,
         request: &serde_json::Value,
     ) -> Result<serde_json::Value> {
-        self.request_openapi(Method::POST, "/v1.0/edu/devices", access_token, None, Some(request))
-            .await
-            .map_err(|err| err.map_module("edu"))
+        self.request_openapi(
+            Method::POST,
+            "/v1.0/edu/devices",
+            access_token,
+            None,
+            Some(request),
+        )
+        .await
+        .map_err(|err| err.map_module("edu"))
     }
 
     /// Executes this API call.
@@ -48,9 +54,15 @@ impl DingTalkClient {
         access_token: &str,
         request: &serde_json::Value,
     ) -> Result<serde_json::Value> {
-        self.request_openapi(Method::POST, "/v1.0/edu/cards", access_token, None, Some(request))
-            .await
-            .map_err(|err| err.map_module("edu"))
+        self.request_openapi(
+            Method::POST,
+            "/v1.0/edu/cards",
+            access_token,
+            None,
+            Some(request),
+        )
+        .await
+        .map_err(|err| err.map_module("edu"))
     }
 
     /// Executes this API call.
@@ -127,9 +139,15 @@ impl DingTalkClient {
         access_token: &str,
         request: &serde_json::Value,
     ) -> Result<serde_json::Value> {
-        self.request_openapi(Method::POST, "/v1.0/edu/orders", access_token, None, Some(request))
-            .await
-            .map_err(|err| err.map_module("edu"))
+        self.request_openapi(
+            Method::POST,
+            "/v1.0/edu/orders",
+            access_token,
+            None,
+            Some(request),
+        )
+        .await
+        .map_err(|err| err.map_module("edu"))
     }
 
     /// Executes this API call.

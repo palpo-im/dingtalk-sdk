@@ -8,7 +8,7 @@ use std::collections::HashMap;
 use std::sync::Arc;
 use std::time::Duration;
 use tokio::sync::Mutex;
-use tokio::time::{sleep, Instant};
+use tokio::time::{Instant, sleep};
 
 const DEFAULT_BASE_URL: &str = "https://oapi.dingtalk.com";
 const DEFAULT_TIMEOUT: u64 = 30;

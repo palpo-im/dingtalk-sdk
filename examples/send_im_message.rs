@@ -1,5 +1,5 @@
-use dingtalk_sdk::models::{Message, TextMessage};
 use dingtalk_sdk::DingTalkClient;
+use dingtalk_sdk::models::{Message, TextMessage};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
